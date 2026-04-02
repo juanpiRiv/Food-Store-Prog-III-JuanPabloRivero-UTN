@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Food Store</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+
+  <body class="page-admin">
+    <header>
+      <h1>Panel Admin</h1>
+      <p class="admin-meta">
+        <span id="admin-user"></span>
+        <a id="link-volver" href="../../client/home/home.html"
+          >Volver a la tienda</a
+        >
+      </p>
+    </header>
+
+    <main>
+      <h2>Productos</h2>
+
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-productos"></tbody>
+      </table>
+    </main>
+
+    <script type="module" src="./home.ts"></script>
+  </body>
+</html>
