@@ -174,6 +174,19 @@ export function checkAuthUser(
   return true;
 }
 
+/**
+ * Tienda, carrito y pedidos: accesibles para cliente y admin (el admin puede
+ * volver desde el panel sin quedar redirigido otra vez al admin).
+ */
+export function checkAuthTienda(loginPath: string): boolean {
+  const session = getSession();
+  if (session === null) {
+    navigate(loginPath);
+    return false;
+  }
+  return true;
+}
+
 export async function register(
   email: string,
   password: string,
@@ -207,7 +220,8 @@ export async function register(
     return {
       ok: false,
       code: "email_en_uso",
-      message: "Ese email ya está registrado.",
+      message:
+        "Ese email ya tiene cuenta. Si ya la creaste (o es el admin de prueba), usá Iniciar sesión, no Registrarse.",
     };
   }
   const hash = await sha256Hex(password);

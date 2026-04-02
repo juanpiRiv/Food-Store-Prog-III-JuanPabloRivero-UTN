@@ -1,58 +1,49 @@
+import type { Producto } from "../../../types/IUser.js";
 import { ROUTES } from "../../../utils/navigate.js";
 import { categorias, productos } from "../../../data/productos.js";
-import { checkAuthUser, getSession, logout } from "../../../utils/auth.js";
+import { aplicarPreciosABase } from "../../../utils/preciosStorage.js";
+import { agregarAlCarrito } from "../../../utils/carritoStorage.js";
+import { checkAuthTienda } from "../../../utils/auth.js";
+import { renderClientNav } from "../../../utils/clientNav.js";
 
-function renderNav(): void {
-  const nav = document.getElementById("nav-main");
-  if (!nav) return;
+let categoriaSeleccionada: string | null = null;
+let textoBusqueda = "";
 
-  const session = getSession();
-
-  const links: { href: string; label: string }[] = [
-    { href: ROUTES.clientHome, label: "Inicio" },
-    { href: "#", label: "Mis Pedidos" },
-    { href: "#", label: "Carrito" },
-  ];
-
-  if (session?.rol === "admin") {
-    links.push({ href: ROUTES.adminHome, label: "Panel Admin" });
-  }
-
-  const authBlock = session
-    ? `<span class="nav-user">${session.email}</span>
-       <button type="button" class="nav-logout" id="btn-logout">Cerrar sesión</button>`
-    : `<a href="${ROUTES.login}">Iniciar sesión</a>
-       <a href="${ROUTES.registro}">Registrarse</a>`;
-
-  nav.innerHTML = [
-    ...links.map((l) => `<a href="${l.href}">${l.label}</a>`),
-    authBlock,
-  ].join("");
-
-  document.getElementById("btn-logout")?.addEventListener("click", () => {
-    logout();
-  });
+function catalogoActual(): Producto[] {
+  return aplicarPreciosABase(productos);
 }
 
-function cargarCategorias(): void {
-  const lista = document.getElementById("lista-categorias");
-  if (!lista) return;
-
-  for (const cat of categorias) {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = "#";
-    a.textContent = cat;
-    li.appendChild(a);
-    lista.appendChild(li);
+function filtrarLista(): Producto[] {
+  let lista = [...catalogoActual()];
+  if (categoriaSeleccionada !== null) {
+    lista = lista.filter((p) => p.categoria === categoriaSeleccionada);
   }
+  const q = textoBusqueda.trim().toLowerCase();
+  if (q.length > 0) {
+    lista = lista.filter(
+      (p) =>
+        p.nombre.toLowerCase().includes(q) ||
+        p.descripcion.toLowerCase().includes(q) ||
+        p.categoria.toLowerCase().includes(q),
+    );
+  }
+  return lista;
 }
 
-function cargarProductos(): void {
+function renderProductos(): void {
   const contenedor = document.getElementById("contenedor-productos");
   if (!contenedor) return;
 
-  for (const prod of productos) {
+  contenedor.innerHTML = "";
+  const lista = filtrarLista();
+
+  if (lista.length === 0) {
+    contenedor.innerHTML =
+      '<p class="sin-resultados">No hay productos con ese criterio.</p>';
+    return;
+  }
+
+  for (const prod of lista) {
     const article = document.createElement("article");
 
     article.innerHTML = `
@@ -60,24 +51,92 @@ function cargarProductos(): void {
             <h3>${prod.nombre}</h3>
             <p>${prod.descripcion}</p>
             <strong>$${prod.precio}</strong>
-            <button type="button">Agregar</button>
+            <button type="button" class="btn-agregar">Agregar al carrito</button>
         `;
 
-    const btn = article.querySelector("button");
+    const btn = article.querySelector(".btn-agregar");
     btn?.addEventListener("click", () => {
-      alert(`Agregaste: ${prod.nombre}`);
+      agregarAlCarrito(prod);
+      renderClientNav();
     });
 
     contenedor.appendChild(article);
   }
 }
 
+function marcarCategoriaActiva(): void {
+  const lista = document.getElementById("lista-categorias");
+  if (!lista) return;
+  lista.querySelectorAll("a").forEach((a) => {
+    const el = a as HTMLAnchorElement;
+    const cat = el.dataset.categoria ?? "";
+    const activo =
+      (categoriaSeleccionada === null && cat === "todas") ||
+      (categoriaSeleccionada !== null && cat === categoriaSeleccionada);
+    el.classList.toggle("categoria-activa", activo);
+  });
+}
+
+function cargarCategorias(): void {
+  const lista = document.getElementById("lista-categorias");
+  if (!lista) return;
+
+  lista.innerHTML = "";
+
+  const todas = document.createElement("li");
+  const aTodas = document.createElement("a");
+  aTodas.href = "#";
+  aTodas.dataset.categoria = "todas";
+  aTodas.textContent = "Todas";
+  aTodas.addEventListener("click", (e) => {
+    e.preventDefault();
+    categoriaSeleccionada = null;
+    marcarCategoriaActiva();
+    renderProductos();
+  });
+  todas.appendChild(aTodas);
+  lista.appendChild(todas);
+
+  for (const cat of categorias) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "#";
+    a.dataset.categoria = cat;
+    a.textContent = cat;
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      categoriaSeleccionada = cat;
+      marcarCategoriaActiva();
+      renderProductos();
+    });
+    li.appendChild(a);
+    lista.appendChild(li);
+  }
+
+  marcarCategoriaActiva();
+}
+
+function setupBusqueda(): void {
+  const form = document.getElementById("form-buscar") as HTMLFormElement | null;
+  const input = document.getElementById("input-buscar") as HTMLInputElement | null;
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    textoBusqueda = input?.value ?? "";
+    renderProductos();
+  });
+  input?.addEventListener("input", () => {
+    textoBusqueda = input.value;
+    renderProductos();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  if (!checkAuthUser(ROUTES.login, ROUTES.adminHome, "client")) {
+  if (!checkAuthTienda(ROUTES.login)) {
     return;
   }
 
-  renderNav();
+  renderClientNav();
   cargarCategorias();
-  cargarProductos();
+  setupBusqueda();
+  renderProductos();
 });

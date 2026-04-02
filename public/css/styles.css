@@ -87,6 +87,40 @@ body.page-admin header {
   font-weight: bold;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.page-admin .celda-precio {
+  white-space: nowrap;
+}
+
+body.page-admin .prefijo-precio {
+  margin-right: 4px;
+  font-weight: 600;
+}
+
+body.page-admin .admin-input-precio {
+  width: 6.5rem;
+  padding: 6px 8px;
+  font-size: 1rem;
+}
+
+body.page-admin .admin-ayuda-precios {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  max-width: 42rem;
+}
+
 /* LAYOUT */
 body {
   display: grid;
@@ -250,4 +284,86 @@ article strong {
 .register-text {
   text-align: center;
   margin-top: 15px;
+}
+
+/* Cliente: categorías, carrito, pedidos */
+aside a.categoria-activa {
+  color: var(--color-primario);
+  font-weight: bold;
+}
+
+.sin-resultados {
+  padding: 16px;
+  color: #666;
+}
+
+body.page-client-extra {
+  display: block;
+  min-height: 100vh;
+}
+
+.main-client-extra {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main-client-extra a {
+  color: var(--color-primario);
+  font-weight: bold;
+}
+
+.tabla-carrito {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: var(--color-blanco);
+}
+
+.tabla-carrito th,
+.tabla-carrito td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-carrito .qty {
+  display: inline-block;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.btn-menos,
+.btn-mas,
+.btn-quitar {
+  padding: 4px 10px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.total-carrito {
+  font-size: 1.2rem;
+  margin: 16px 0;
+}
+
+.acciones-carrito {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pedido-card {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.pedido-card ul {
+  margin: 8px 0 8px 20px;
+}
+
+.pedido-fecha {
+  font-size: 0.9rem;
+  color: #666;
 }

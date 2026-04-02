@@ -14,6 +14,8 @@ export default defineConfig({
         registro: resolve(__dirname, "src/pages/auth/registro/registro.html"),
         adminHome: resolve(__dirname, "src/pages/admin/home/home.html"),
         clientHome: resolve(__dirname, "src/pages/client/home/home.html"),
+        carrito: resolve(__dirname, "src/pages/client/carrito/carrito.html"),
+        pedidos: resolve(__dirname, "src/pages/client/pedidos/pedidos.html"),
       },
     },
   },

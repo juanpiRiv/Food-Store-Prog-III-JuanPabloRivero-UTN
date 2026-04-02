@@ -1,6 +1,6 @@
 :root {
   --color-primario: #ff6347;
-  --color-fondo: #f0f0f0;
+  --color-fondo: hsl(0, 0%, 94%);
   --color-texto: #333;
   --color-blanco: #fff;
   --color-borde: #ddd;
