@@ -82,10 +82,6 @@ Los usuarios que se dan de alta por **Registro** tienen siempre rol **client**. 
 - **Carrito:** suma ítems desde la tienda; en **Carrito** podés cambiar cantidades, vaciar o **Confirmar pedido** (guarda el pedido en `localStorage` y te lleva a **Mis pedidos**).
 - **Mis pedidos:** listado de pedidos confirmados (solo en este navegador).
 
-## Imágenes de productos y estilos
-
-- Las fotos del catálogo son **`burger.jpg` y `pizza.jpg`** en **`src/assets/productos/`** (copiá o reemplazá ahí tus JPG). Se importan en [`src/data/productos.ts`](src/data/productos.ts) con `?url`. Bebida y papas reutilizan esas dos fotos como placeholder hasta que agregues más archivos.
-- Los CSS siguen en **`public/css/`** y se enlazan con rutas absolutas (`/css/...`), coherente con `base: "/"` en Vite.
 
 ## Nota de seguridad
 
