@@ -1,10 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap");
+
 :root {
-  --color-primario: #ff6347;
-  --color-fondo: hsl(0, 0%, 94%);
-  --color-texto: #333;
-  --color-blanco: #fff;
-  --color-borde: #ddd;
-  --color-focus: #ff4500;
+  --color-primario: #2563eb;
+  --color-secundario: #7c3aed;
+  --color-fondo: #f3f6fc;
+  --color-superficie: #ffffff;
+  --color-texto: #0f172a;
+  --color-texto-suave: #475569;
+  --color-borde: #dbe5f3;
+  --color-error: #b91c1c;
+  --sombra-card: 0 14px 30px rgba(15, 23, 42, 0.14);
+  --radio: 14px;
 }
 
 * {
@@ -14,94 +20,94 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--color-fondo);
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #dae6ff, var(--color-fondo) 45%);
   color: var(--color-texto);
+  min-height: 100vh;
 }
 
 .login-container {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 20px;
 }
 
 .login-card {
-  background-color: var(--color-blanco);
-  width: 100%;
-  max-width: 380px;
-  padding: 30px;
+  width: min(430px, 100%);
+  background: var(--color-superficie);
   border: 1px solid var(--color-borde);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-card);
+  padding: 30px;
 }
 
 .login-card h1 {
-  text-transform: uppercase;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   color: var(--color-primario);
-  letter-spacing: 2px;
-  margin-bottom: 10px;
+  font-size: 1.7rem;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   text-align: center;
-  margin-bottom: 25px;
-  line-height: 1.5;
+  color: var(--color-texto-suave);
+  margin-bottom: 20px;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
+  padding: 11px 12px;
   border: 1px solid var(--color-borde);
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--color-focus);
-  box-shadow: 0 0 4px rgba(255, 69, 0, 0.3);
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background-color: var(--color-primario);
-  color: var(--color-blanco);
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 10px;
+  padding: 11px 12px;
+  color: #fff;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 10px;
+  background: linear-gradient(120deg, var(--color-primario), var(--color-secundario));
 }
 
 button:hover {
-  background-color: var(--color-focus);
+  filter: brightness(1.04);
 }
 
 .register-text {
+  margin-top: 16px;
   text-align: center;
-  margin-top: 18px;
-  font-size: 14px;
+  color: var(--color-texto-suave);
 }
 
 .register-text a {
   color: var(--color-primario);
+  font-weight: 700;
   text-decoration: none;
-  font-weight: bold;
 }
 
 .register-text a:hover {
@@ -109,12 +115,21 @@ button:hover {
 }
 
 .form-message {
-  color: #b00020;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: var(--color-error);
   font-size: 0.9rem;
-  margin-bottom: 12px;
 }
 
 body.page-auth {
   display: block;
-  min-height: 100vh;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px 18px;
+  }
 }

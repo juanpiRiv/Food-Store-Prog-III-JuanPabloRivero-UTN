@@ -15,19 +15,27 @@ function catalogoActual(): Producto[] {
 
 function filtrarLista(): Producto[] {
   let lista = [...catalogoActual()];
-  if (categoriaSeleccionada !== null) {
-    lista = lista.filter((p) => p.categoria === categoriaSeleccionada);
-  }
+
   const q = textoBusqueda.trim().toLowerCase();
   if (q.length > 0) {
-    lista = lista.filter(
+    // Si hay búsqueda activa, se busca en todo el catálogo (sin restringir por categoría).
+    return lista.filter(
       (p) =>
         p.nombre.toLowerCase().includes(q) ||
         p.descripcion.toLowerCase().includes(q) ||
         p.categoria.toLowerCase().includes(q),
     );
   }
+
+  if (categoriaSeleccionada !== null) {
+    lista = lista.filter((p) => p.categoria === categoriaSeleccionada);
+  }
+
   return lista;
+}
+
+function aplicarFiltros(): void {
+  renderProductos();
 }
 
 function renderProductos(): void {
@@ -92,7 +100,7 @@ function cargarCategorias(): void {
     e.preventDefault();
     categoriaSeleccionada = null;
     marcarCategoriaActiva();
-    renderProductos();
+    aplicarFiltros();
   });
   todas.appendChild(aTodas);
   lista.appendChild(todas);
@@ -107,7 +115,7 @@ function cargarCategorias(): void {
       e.preventDefault();
       categoriaSeleccionada = cat;
       marcarCategoriaActiva();
-      renderProductos();
+      aplicarFiltros();
     });
     li.appendChild(a);
     lista.appendChild(li);
@@ -122,11 +130,11 @@ function setupBusqueda(): void {
   form?.addEventListener("submit", (e) => {
     e.preventDefault();
     textoBusqueda = input?.value ?? "";
-    renderProductos();
+    aplicarFiltros();
   });
   input?.addEventListener("input", () => {
     textoBusqueda = input.value;
-    renderProductos();
+    aplicarFiltros();
   });
 }
 
