@@ -13,6 +13,13 @@ export interface Sesion {
   readonly rol: Rol;
 }
 
+export interface Categoria {
+  readonly id: number;
+  readonly nombre: string;
+  readonly descripcion: string;
+  eliminado?: boolean;
+}
+
 export interface Producto {
   readonly id: number;
   readonly nombre: string;
@@ -20,6 +27,10 @@ export interface Producto {
   readonly precio: number;
   readonly imagen: string;
   readonly categoria: string;
+  readonly categoriaId: number;
+  readonly stock: number;
+  readonly disponible: boolean;
+  eliminado?: boolean;
 }
 
 export type AuthErrorCode =

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin | Food Store</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="page-admin">
+    <header class="admin-header">
+      <h1>🍔 Food Store — Panel Admin</h1>
+      <div class="admin-header-actions">
+        <span id="admin-user" class="nav-user"></span>
+        <a href="/src/pages/client/home/home.html" class="btn-secondary">Ver tienda</a>
+        <button type="button" id="btn-logout" class="btn-logout">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-sidebar">
+        <ul>
+          <li><a href="./dashboard.html" class="active">Dashboard</a></li>
+          <li><a href="../categorias/categorias.html">Categorías</a></li>
+          <li><a href="../productos/productos.html">Productos</a></li>
+          <li><a href="../pedidos/pedidos.html">Pedidos</a></li>
+        </ul>
+      </nav>
+
+      <main class="admin-main">
+        <h2>Dashboard</h2>
+
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <span class="stat-num" id="stat-categorias">—</span>
+            <span class="stat-label">Categorías</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-productos">—</span>
+            <span class="stat-label">Productos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-disponibles">—</span>
+            <span class="stat-label">Disponibles</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-pedidos">—</span>
+            <span class="stat-label">Pedidos totales</span>
+          </div>
+        </div>
+
+        <h3>Pedidos por estado</h3>
+        <table class="admin-table" id="tabla-estados">
+          <thead>
+            <tr><th>Estado</th><th>Cantidad</th></tr>
+          </thead>
+          <tbody id="tbody-estados"></tbody>
+        </table>
+      </main>
+    </div>
+
+    <script type="module" src="./dashboard.ts"></script>
+  </body>
+</html>

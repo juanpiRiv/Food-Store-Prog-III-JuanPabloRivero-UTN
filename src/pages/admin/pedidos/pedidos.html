@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos | Admin | Food Store</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="page-admin">
+    <header class="admin-header">
+      <h1>🍔 Food Store — Panel Admin</h1>
+      <div class="admin-header-actions">
+        <span id="admin-user" class="nav-user"></span>
+        <button type="button" id="btn-logout" class="btn-logout">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-sidebar">
+        <ul>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="../categorias/categorias.html">Categorías</a></li>
+          <li><a href="../productos/productos.html">Productos</a></li>
+          <li><a href="./pedidos.html" class="active">Pedidos</a></li>
+        </ul>
+      </nav>
+
+      <main class="admin-main">
+        <h2>Gestión de Pedidos</h2>
+
+        <div class="filtros-row">
+          <label for="filtro-estado">Filtrar por estado:</label>
+          <select id="filtro-estado">
+            <option value="">Todos</option>
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="CONFIRMADO">Confirmado</option>
+            <option value="TERMINADO">Terminado</option>
+            <option value="CANCELADO">Cancelado</option>
+          </select>
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Total</th>
+              <th>Pago</th>
+              <th>Estado</th>
+              <th>Cambiar estado</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-pedidos"></tbody>
+        </table>
+      </main>
+    </div>
+
+    <script type="module" src="./pedidos.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categorías | Admin | Food Store</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="page-admin">
+    <header class="admin-header">
+      <h1>🍔 Food Store — Panel Admin</h1>
+      <div class="admin-header-actions">
+        <span id="admin-user" class="nav-user"></span>
+        <button type="button" id="btn-logout" class="btn-logout">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-sidebar">
+        <ul>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="./categorias.html" class="active">Categorías</a></li>
+          <li><a href="../productos/productos.html">Productos</a></li>
+          <li><a href="../pedidos/pedidos.html">Pedidos</a></li>
+        </ul>
+      </nav>
+
+      <main class="admin-main">
+        <h2>Gestión de Categorías</h2>
+
+        <section class="admin-form-section">
+          <h3 id="form-title">Nueva categoría</h3>
+          <form id="form-categoria">
+            <input type="hidden" id="cat-id" value="" />
+            <div class="form-row">
+              <label for="cat-nombre">Nombre *</label>
+              <input type="text" id="cat-nombre" required placeholder="Ej: Hamburguesas" />
+            </div>
+            <div class="form-row">
+              <label for="cat-descripcion">Descripción</label>
+              <input type="text" id="cat-descripcion" placeholder="Descripción breve" />
+            </div>
+            <div class="form-actions">
+              <button type="submit" id="btn-guardar">Guardar</button>
+              <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+            </div>
+          </form>
+        </section>
+
+        <section>
+          <h3>Categorías activas</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-categorias"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./categorias.ts"></script>
+  </body>
+</html>

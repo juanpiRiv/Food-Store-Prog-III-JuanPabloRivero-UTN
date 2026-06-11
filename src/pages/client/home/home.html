@@ -19,17 +19,34 @@
     </aside>
 
     <main>
-      <form id="form-buscar">
-        <input
-          id="input-buscar"
-          type="search"
-          placeholder="Buscar productos..."
-          autocomplete="off"
-        />
-        <button type="submit">Buscar</button>
-      </form>
+      <div class="barra-filtros">
+        <form id="form-buscar">
+          <input
+            id="input-buscar"
+            type="search"
+            placeholder="Buscar productos..."
+            autocomplete="off"
+          />
+          <button type="submit">Buscar</button>
+        </form>
 
-      <h2>Productos Destacados</h2>
+        <div class="sort-row">
+          <label for="select-orden">Ordenar:</label>
+          <select id="select-orden">
+            <option value="default">Por defecto</option>
+            <option value="az">Nombre A-Z</option>
+            <option value="za">Nombre Z-A</option>
+            <option value="precio-asc">Precio menor a mayor</option>
+            <option value="precio-desc">Precio mayor a menor</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="resultados-header">
+        <h2>Productos</h2>
+        <span id="contador-resultados" class="contador-resultados"></span>
+      </div>
+
       <section id="contenedor-productos"></section>
     </main>
 
