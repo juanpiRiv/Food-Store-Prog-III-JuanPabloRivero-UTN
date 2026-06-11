@@ -1,5 +1,5 @@
 import type { Producto } from "../types/IUser.js";
-import { productos as catalogoBase } from "../data/productos.js";
+import { productosSeed } from "../data/productos.js";
 
 const KEY = "foodstore_precios_v1";
 
@@ -34,7 +34,6 @@ function writeOverrides(m: Map<number, number>): void {
   }
 }
 
-/** Catálogo con precios guardados por el admin (o base si no hay override). */
 export function aplicarPreciosABase(productosBase: readonly Producto[]): Producto[] {
   const overrides = readOverrides();
   return productosBase.map((p) => {
@@ -50,7 +49,7 @@ export function getPrecioEfectivo(productoId: number, precioBase: number): numbe
 }
 
 export function setPrecioProducto(productoId: number, precio: number): boolean {
-  const base = catalogoBase.find((p) => p.id === productoId);
+  const base = productosSeed.find((p) => p.id === productoId);
   if (!base) return false;
   if (!Number.isFinite(precio) || precio < 0) return false;
   const rounded = Math.round(precio);

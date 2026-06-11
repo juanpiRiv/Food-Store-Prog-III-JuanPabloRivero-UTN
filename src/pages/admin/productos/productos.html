@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos | Admin | Food Store</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="page-admin">
+    <header class="admin-header">
+      <h1>🍔 Food Store — Panel Admin</h1>
+      <div class="admin-header-actions">
+        <span id="admin-user" class="nav-user"></span>
+        <button type="button" id="btn-logout" class="btn-logout">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-sidebar">
+        <ul>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="../categorias/categorias.html">Categorías</a></li>
+          <li><a href="./productos.html" class="active">Productos</a></li>
+          <li><a href="../pedidos/pedidos.html">Pedidos</a></li>
+        </ul>
+      </nav>
+
+      <main class="admin-main">
+        <h2>Gestión de Productos</h2>
+
+        <section class="admin-form-section">
+          <h3 id="form-title">Nuevo producto</h3>
+          <form id="form-producto">
+            <input type="hidden" id="prod-id" value="" />
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="prod-nombre">Nombre *</label>
+                <input type="text" id="prod-nombre" required placeholder="Nombre del producto" />
+              </div>
+              <div class="form-row">
+                <label for="prod-categoria">Categoría *</label>
+                <select id="prod-categoria" required>
+                  <option value="">Seleccionar...</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="prod-precio">Precio *</label>
+                <input type="number" id="prod-precio" min="1" step="1" required placeholder="0" />
+              </div>
+              <div class="form-row">
+                <label for="prod-stock">Stock *</label>
+                <input type="number" id="prod-stock" min="0" step="1" required placeholder="0" />
+              </div>
+              <div class="form-row form-row-full">
+                <label for="prod-descripcion">Descripción</label>
+                <input type="text" id="prod-descripcion" placeholder="Descripción breve" />
+              </div>
+              <div class="form-row form-row-full">
+                <label for="prod-imagen">Imagen (URL)</label>
+                <input type="text" id="prod-imagen" placeholder="https://... o dejar vacío" />
+              </div>
+              <div class="form-row">
+                <label>
+                  <input type="checkbox" id="prod-disponible" checked />
+                  Disponible
+                </label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit">Guardar</button>
+              <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+            </div>
+          </form>
+        </section>
+
+        <section>
+          <h3>Productos activos</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Disponible</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-productos"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./productos.ts"></script>
+  </body>
+</html>

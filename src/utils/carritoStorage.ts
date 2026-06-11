@@ -25,6 +25,7 @@ function read(): LineaPedido[] {
           nombre: o.nombre,
           precio: o.precio,
           cantidad: o.cantidad,
+          imagen: typeof o.imagen === "string" ? o.imagen : undefined,
         });
       }
     }
@@ -50,21 +51,19 @@ export function getCarritoCantidadTotal(): number {
   return read().reduce((s, i) => s + i.cantidad, 0);
 }
 
-export function agregarAlCarrito(producto: Producto): void {
+export function agregarAlCarrito(producto: Producto, cantidad = 1): void {
   const items = [...read()];
   const idx = items.findIndex((i) => i.productoId === producto.id);
   if (idx >= 0) {
     const linea = items[idx];
-    items[idx] = {
-      ...linea,
-      cantidad: linea.cantidad + 1,
-    };
+    items[idx] = { ...linea, cantidad: linea.cantidad + cantidad };
   } else {
     items.push({
       productoId: producto.id,
       nombre: producto.nombre,
       precio: producto.precio,
-      cantidad: 1,
+      cantidad,
+      imagen: producto.imagen,
     });
   }
   write(items);

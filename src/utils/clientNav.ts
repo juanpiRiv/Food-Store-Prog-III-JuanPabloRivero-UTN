@@ -19,7 +19,7 @@ export function renderClientNav(): void {
   ];
 
   if (session?.rol === "admin") {
-    links.push({ href: ROUTES.adminHome, label: "Panel Admin" });
+    links.push({ href: ROUTES.adminDashboard, label: "Panel Admin" });
   }
 
   const authBlock = session

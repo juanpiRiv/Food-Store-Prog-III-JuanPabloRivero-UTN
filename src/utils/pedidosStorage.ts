@@ -1,4 +1,4 @@
-import type { LineaPedido, Pedido } from "../types/tienda.js";
+import type { EstadoPedido, FormaPago, LineaPedido, Pedido } from "../types/tienda.js";
 
 const KEY = "foodstore_pedidos_v1";
 
@@ -33,10 +33,36 @@ function read(): Pedido[] {
               nombre: x.nombre,
               precio: x.precio,
               cantidad: x.cantidad,
+              imagen: typeof x.imagen === "string" ? x.imagen : undefined,
             });
           }
         }
-        out.push({ id: o.id, fecha: o.fecha, items, total: o.total });
+
+        const estado: EstadoPedido =
+          o.estado === "PENDIENTE" ||
+          o.estado === "CONFIRMADO" ||
+          o.estado === "TERMINADO" ||
+          o.estado === "CANCELADO"
+            ? (o.estado as EstadoPedido)
+            : "PENDIENTE";
+
+        const formaPago: FormaPago =
+          o.formaPago === "TARJETA" ||
+          o.formaPago === "TRANSFERENCIA" ||
+          o.formaPago === "EFECTIVO"
+            ? (o.formaPago as FormaPago)
+            : "EFECTIVO";
+
+        out.push({
+          id: o.id,
+          fecha: o.fecha,
+          items,
+          total: o.total,
+          estado,
+          formaPago,
+          userId: typeof o.userId === "string" ? o.userId : "",
+          userEmail: typeof o.userEmail === "string" ? o.userEmail : "",
+        });
       }
     }
     return out;
@@ -57,14 +83,37 @@ export function getPedidos(): Pedido[] {
   return read();
 }
 
-export function registrarPedido(items: readonly LineaPedido[]): Pedido {
+export function getPedidosDeUsuario(userId: string): Pedido[] {
+  return read().filter((p) => p.userId === userId);
+}
+
+export function registrarPedido(
+  items: readonly LineaPedido[],
+  formaPago: FormaPago,
+  userId: string,
+  userEmail: string,
+): Pedido {
   const total = items.reduce((s, i) => s + i.precio * i.cantidad, 0);
   const pedido: Pedido = {
     id: crypto.randomUUID(),
     fecha: new Date().toISOString(),
     items: [...items],
     total,
+    estado: "PENDIENTE",
+    formaPago,
+    userId,
+    userEmail,
   };
   write([pedido, ...read()]);
   return pedido;
+}
+
+export function actualizarEstadoPedido(id: string, estado: EstadoPedido): boolean {
+  const todos = read();
+  const idx = todos.findIndex((p) => p.id === id);
+  if (idx < 0) return false;
+  const updated = [...todos];
+  updated[idx] = { ...updated[idx], estado };
+  write(updated);
+  return true;
 }
